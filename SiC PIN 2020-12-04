@@ -1,0 +1,64 @@
+#sample code: parallel plane SiC p-i-n diode forward and breakdown J-V characterist
+#go atlas simflags="-V 5.26.1.R -P 4 -160"
+#go atlas -P4 -160
+
+mesh
+
+x.mesh loc=0.0 spac=0.5
+x.mesh loc=5.0 spac=0.5
+
+y.mesh loc=-1.0 spac=1.0
+y.mesh loc=0.0 spac=0.25
+y.mesh loc=2.1 spac=0.01
+y.mesh loc=30.0 spac=10
+y.mesh loc=32.1 spac=0.2
+y.mesh loc=33.0 spac=1.0
+y.mesh loc=34.0 spac=20
+y.mesh loc=180.0 spac=20
+y.mesh loc=182.0 spac=1.0
+y.mesh loc=184 spac=1.0
+
+region num=1 material=4H-SiC x.min=0 x.max=5 y.min=0 y.max=182
+
+electrode name=anode material=tianium x.min=0 x.max=5 y.max=0
+electrode name=cathode material=aluminum y.min=182 y.max=184
+
+doping uniform n.type conc=3.8e16 region=1
+doping gauss p.type conc=1.0e21 x.min=0 x.max=5 junc=2.0 rat=0.1
+doping uniform n.type conc=1.0e20 y.min=32 y.max=182
+
+save outf=PIN_Structure.str master.out
+
+#go atlas
+#mesh inf=PIN_Structure.str
+
+material material=4H-SiC region=1 permittivity=9.76 eg300=3.26 affinity=3.7 egalpha=3.3e-2 egbeta=1.0e5 nc300=1.7e19 nv300=2.5e19 arichn=146 arichp=30 augn=3.0e-29 augp=3.0e-29 taun0=3.33e-6 taup0=6.7e-7 nsrhn=3.0e17 nsrhp=3.0e17 edb=0.050 eab=0.200
+
+models region=1 material=4H-SiC fermidirac analytic conwell srh bgn auger incomplete temp=300 print
+
+mobility material=4H-SiC region=1 vsatn=2.2e17 vsatp=2.2e17 betan=1.2 betap=2   mu1n.caug=40 mu2n.caug=1136 ncritn.caug=2e17 alphan.caug=-3 betan.caug=-3 gamman.caug=0.0 deltan.caug=0.76   mu1p.caug=20 mu2p.caug=125 ncritp.caug=1.0e19 alphap.caug=-3 betap.caug=-3 gammap.caug=0.0 deltap.caug=0.5
+
+impact region=1 aniso e.side selb sic4h0001 an1=3.44e6 an2=3.44e6 bn1=2.58e7 bn2=2.58e7 ap1=3.5e6 ap2=3.5e6 bp1=1.7e7 bp2=1.7e7 opphe=0.106
+
+methode newton autonr climit=1.0e-9 maxtraps=40 itlimit=40 dvmax=1.0e8 ir.tol=1.0e-40 cr.tol=1.0e-40 ix.tol=1.0e-40 px.tol=1.0e-30 pr.tol=1.0e-45 cx.tol=1.0e-30
+
+log outf=PIN_Forward.log
+
+solve init
+solve vanode=0.01 vstep=0.01 vfinal=3.5 name=anode
+
+save outf=PIN_Forward.str master.out
+
+log outf=PIN_Reverse.log
+
+solve init
+solve vanode=-0.2 vstep=-0.2 vfinal=-2.0 name=anode
+solve vstep=-2 vfinal=-20 name=anode
+solve vstep=-2 vfinal=-100 name=anode
+solve vstep=-50 vfinal=-3000 name=anode
+solve vstep=-10 vfinal=-3250 name=anode
+solve vstep=-1.0 vfinal=-3400 name=anode compl=1e-23 cname=anode
+
+save outf=PIN_Reverse.str master.out
+
+Quit
