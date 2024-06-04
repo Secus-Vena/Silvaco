@@ -1,0 +1,71 @@
+# (c) Silvaco Inc., 2018
+
+go atlas 
+
+mesh 
+
+x.mesh location=0 spacing=0.2
+x.mesh location=1 spacing=0.2
+
+y.mesh location=0   spacing=0.2
+y.mesh location=2   spacing=0.01
+y.mesh location=75  spacing=10
+y.mesh location=152 spacing=0.2
+
+region number=1 material=4H-SiC
+
+electrode name=anode top
+electrode name=cathode bottom
+
+doping conc=2e19 p.type uniform y.max=2
+doping conc=8e14 n.type uniform y.min=2 y.max=150
+doping conc=2e19 n.type uniform y.min=150
+
+save outf=sic_PIN_ex.str
+
+
+go atlas 
+
+mesh inf=sic_PIN_ex.str
+
+material material=4H-SiC taun0=1e-6 taup0=1e-6 ni.min=1e6
+models srh
+impact aniso sic4h0001 e.side
+
+method zip.bicgst climit=1e-4 maxtraps=30 itlimit=30 \
+       ir.tol=1.e-30 ix.tol=1.e-30 
+
+solve init
+solve previous
+log outfile=sic_PIN_ex_BV.log
+
+solve vanode=-0.05 vstep=-0.05 vfinal=-0.5 name=anode
+solve vstep=-0.5 vfinal=-5 name=anode
+solve vstep=-5 vfinal=-50 name=anode
+solve vanode=-100
+solve vstep=-200 vfinal=-16300 name=anode
+solve vstep=-50 vfinal=-16400 name=anode
+solve vstep=-10 vfinal=-16450 name=anode 
+solve vstep=-1 vfinal=-16454 name=anode
+
+save outf=sic_PIN_ex_BV.str
+log off
+tonyplot sic_PIN_ex_BV.log
+
+
+material material=4H-SiC taun0=1e-6 taup0=1e-6 ni.min=1e6
+models srh
+impact aniso sic4h0001 e.side
+
+method zip.bicgst climit=1e-4 maxtraps=30 itlimit=30 \
+       ir.tol=1.e-30 ix.tol=1.e-30 
+
+solve init
+solve previous
+log outfile=sic_PIN_ex_VF.log
+solve vcathode=0 vstep=0.05 vfinal=5 name=anode
+
+save outf=sic_PIN_ex_VF.str
+
+#tonyplot sic_PIN_ex_VF.str
+tonyplot sic_PIN_ex_VF.log
