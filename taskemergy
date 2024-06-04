@@ -1,0 +1,49 @@
+go athena
+line x loc=0.00 spac=2
+line x loc=5 spac=4
+line x loc=10 spac=5
+line x loc=25 spac=2
+line x loc=75 spac=5
+line x loc=100 spac=5
+line x loc=150 spac=10
+line x loc=1000 spac=8
+line x loc=1200 spac=10
+line x loc=1500 spac=15
+line x loc=2000 spac=20
+
+line y loc=0.00 spac=2
+line y loc=10 spac=5
+line y loc=40 spac=10
+line y loc=100 spac=10
+line y loc=300 spac=20
+
+
+#初始化 定义P型衬底
+init silicon c.boron=1e19 two.d
+#淀积 氧化层厚度为0.3
+deposit oxide thick=0.3 
+
+#structure outfile=example1.str
+
+#涂光刻胶，光刻胶类型为AZ1318-SFD，厚度为0.8um，网格设置30
+deposit name.resist=AZ1318-SFD  thick=.8 divisions=30
+
+#设置光刻胶为AZ1318-SFD，对应波长为g.line，设置kim显影模式常数
+rate.dev name.resist=AZ1318-SFD g.line  r1.kim=0.05 c.dill=0.05
+
+#structure outfile=gumming.str
+#tonyplot gumming.str
+
+#设置曝光剂量为100mJ/cm2， 光线反射10次
+expose dose=100.0 num.refl=10
+
+#设置烘烤时间为30分钟，温度为100摄氏度
+bake time=20 temp=100
+
+structure outfile=exampel1.str
+
+#设置显影模式为kim，时间为60s，设置etch进行次数为6，
+develop kim time=60 steps=6 substeps=24
+
+structure outfile=optolith.str
+#tonyplot optolith.str
