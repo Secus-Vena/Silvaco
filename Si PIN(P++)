@@ -1,0 +1,64 @@
+# (c) Silvaco Inc., 2018
+go atlas 
+
+#定义网格
+mesh 
+
+x.mesh location=0 spacing=0.1
+x.mesh location=1 spacing=0.1
+
+y.mesh location=0   spacing=0.2
+y.mesh location=2   spacing=0.01
+y.mesh location=4   spacing=0.2
+y.mesh location=10   spacing=5
+y.mesh location=62  spacing=1
+y.mesh location=64  spacing=1
+y.mesh location=66 spacing=0.1
+
+#定义区域材料
+region number=1 material=silicon y.max=0.2
+region number=2 material=silicon y.min=0.2 y.max=2
+region number=3 material=silicon y.min=2 y.max=64 
+region number=4 material=silicon y.min=64 
+
+#定义电极
+electrode name=anode top
+electrode name=cathode bottom
+
+#定义掺杂
+doping conc=5e20 p.type uniform y.max=0.2
+doping conc=1e19 p.type uniform y.min=0.2 y.max=2
+
+doping conc=1e14 n.type uniform y.min=2 y.max=64
+doping conc=1e19 n.type uniform y.min=64
+save outf=pin_P++.str 
+
+#提取电学特性
+go atlas 
+mesh inf=pin_P++.str 
+material num=1 material=silicon 
+material num=2 material=silicon 
+material num=3 material=silicon 
+material num=4 material=silicon
+models consrh conmob bgn fermi
+impact selb
+method climit=1e-4 maxtraps=10
+
+solve init
+solve previous
+log outfile=Si_pin_P++_BV.log
+solve vanode=0 vstep=0.5 vfinal=5 name=cathode
+solve vstep=5 vfinal=50 name=cathode
+solve vstep=10 vfinal=200 name=cathode
+solve vstep=10 vfinal=3000 name=cathode
+solve vstep=5 vfinal=3200 name=cathode
+save outf=Si_pin_BV.str
+
+solve init
+solve previous
+log outfile=Si_pin_P++_vf.log
+solve vcathode=0 vstep=0.05 vfinal=5 name=anode
+ 
+save outf=Si_pin_vf.str
+
+#tonyplot pin_f.log
