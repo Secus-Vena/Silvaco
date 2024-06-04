@@ -1,0 +1,313 @@
+############### 4H-SiC VDMOS+FLR  ######################
+#VDMOS structrue
+#adjusted structure parameter
+go atlas
+################################################
+#########    Structure Constant   #############
+################################################
+#structure adjustable parameter
+##X direction##
+###basis constant###
+set L_p=20
+set L_source=10
+set L_0=5
+set L_1=5
+set k=0.32
+### Field Limiting Ring(FLR) Space and Width, S/W ###
+####ring space###
+set S1=2.4
+set S2=$S1+$k
+set S3=$S2+$k
+set S4=$S3+$k
+set S5=$S4+$k
+set S6=$S5+$k
+set S7=$S6+$k
+set S8=$S7+$k
+set S9=$S8+$k
+set S10=$S9+$k
+
+####ring width####
+set W1=4
+set W2=$W1
+set W3=$W1
+set W4=$W1
+
+set W5=$W1
+set W6=$W1
+set W7=$W1
+set W8=$W1
+set W9=$W1
+set W10=$W1
+
+##Y direction##
+set T_oxide=0.3
+set T_elec=0.3
+#set T_nsource=0.5
+#set T_pbase=0.5
+set T_P=1
+set T_drift=15
+set T_sub=4.5
+##area Conceration##
+set C_drift=6e15
+set C_sub=1e19
+###pbase inverted uniform doping###
+set C_pbase=2e17
+set peak_pbase=0.65
+#set junction_pbase=$T_nsource+$T_pbase
+set junction_p=$T_p
+###FLR inverted uniform doping###
+set C_flr=$C_pbase
+set peak_flr=$peak_pbase
+set junction_flr=$junction_p
+#set C_nsource=1e18
+#set C_Psource=1e19
+##environment
+set temprature=348
+set qf=1e12
+############################################
+#main junction area position is negative
+############################################
+#mesh structure
+mesh space.mult=1
+####             ####
+#    X direction    #
+####             ####
+x.mesh loc=-$L_p+$L_1 spac=2
+x.mesh loc=-$L_source+$L_1 spac=1
+x.mesh loc=-2+$L_1 spac=1
+x.mesh loc=0+$L_1 spac=0.1
+
+### Field Limiting Ring(FLR) Space and Width, S/W ###
+# R1
+x.mesh loc=0.5*$"S1"+$L_1          spac=0.01
+x.mesh loc=$"S1"+$L_1              spac=0.05
+x.mesh loc=$"S1"+0.5*$"W1"+$L_1    spac=0.2
+x.mesh loc=$"S1"+$"W1"+$L_1        spac=0.01
+
+# R2
+x.mesh loc=$"S1"+$"W1"+0.5*$"S2"+$L_1          spac=0.01
+x.mesh loc=$"S1"+$"W1"+$"S2"+$L_1             spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+0.5*$"W2"+$L_1    spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$L_1       spac=0.05
+
+# R3
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+0.5*$"S3"+$L_1        spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$L_1            spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+0.5*$"W3"+$L_1  spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$L_1      spac=0.05
+
+# R4
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+0.5*$"S4"+$L_1          spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$L_1             spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+0.5*$"W4"+$L_1    spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$L_1        spac=0.05
+
+# R5
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+0.5*$"S5"+$L_1          spac=0.1
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$L_1              spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+0.5*$"W5"+$L_1    spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$L_1        spac=0.05
+
+# R6
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+0.5*$"S6"+$L_1          spac=0.1
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$L_1              spac=0.05
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+0.5*$"W6"+$L_1    spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$L_1       spac=0.05
+
+# R7
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+0.5*$"S7"+$L_1          spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$L_1              spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+0.5*$"W7"+$L_1    spac=0.5
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$L_1        spac=0.1
+
+# R8
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+0.5*$"S8"+$L_1          spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$L_1              spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+0.5*$"W8"+$L_1    spac=0.5
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$L_1        spac=0.1
+
+# R9
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+0.5*$"S9"+$L_1          spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$L_1              spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+0.5*$"W9"+$L_1    spac=0.5
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$L_1        spac=0.1
+
+# R10
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+0.5*$"S10"+$L_1           spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$L_1               spac=0.2
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+0.5*$"W10"+$L_1    spac=0.5
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+$L_1        spac=0.1
+
+# Edge
+x.mesh loc=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+$L_0+$L_1   spac=0.5
+####             ####
+#    Y direction    #
+####             ####
+##y.mesh
+y.mesh loc=-$T_oxide spac=0.1
+y.mesh loc=0 spac=0.2
+y.mesh loc=$T_p    spac=0.05
+y.mesh loc=$T_p+1 spac=0.2
+y.mesh loc=$T_p+$T_drift/2 spac=2
+y.mesh loc=$T_p+$T_drift spac=0.2
+y.mesh loc=$T_p+$T_drift+$T_sub   spac=2
+#save outf=tang.str
+####             ####
+#   region define   #
+####             ####
+##region define
+region num=1 material=4H-SiC y.min=0
+#region num=3 material=air y.max=0
+region num=2 material=Oxide  y.max=0
+electrode num=1 name=source material=Aluminum y.max=0 y.min=-$T_elec x.max=-$L_source+$L_1 x.min=-$L_p+$L_1
+electrode num=2 name=drain bottom 
+#save outf=tang.str
+####                ####
+# Dopant Specification #
+####                ####
+##drift
+doping uniform n.type conc=$C_drift y.min=0
+##sub
+doping uniform n.type conc=$C_sub-$C_drift  y.min= $T_p+$T_drift
+##pbase
+doping uniform p.type conc=$C_pbase+$C_drift y.min=0 y.max=$T_p x.max=$L_1 x.min=-$L_p+$L_1
+### R1
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$L_1 x.max=$"S1"+$"W1"+$L_1   y.max=$T_p
+### R2
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$L_1 x.max=$"S1"+$"W1"+$"S2"+$"W2"+$L_1   y.max=$T_p
+### R3
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$L_1  x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$L_1 y.max=$T_p
+### R4
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$L_1 \    
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$L_1 y.max=$T_p
+### R5
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$L_1 \    
+            x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$L_1 y.max=$T_p
+### R6
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$L_1 \    
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$L_1 y.max=$T_p
+### R7  
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$L_1 \    
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$L_1 y.max=$T_p
+### R8
+doping uniform p.type conc=$C_pbase+$C_drift x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$L_1 \    
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$L_1 y.max=$T_p
+### R9
+doping uniform p.type conc=$C_pbase+$C_drift \
+             x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$L_1 \      
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$L_1 y.max=$T_p
+### R10
+doping uniform p.type conc=$C_pbase+$C_drift \
+             x.min=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$L_1 \      
+             x.max=$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+$L_1  y.max=$T_p
+save outf=VDMOS.str
+###################
+# remesh the mesh #
+###################
+
+go devedit
+init infile=VDMOS.str
+#=============================================================================
+# remesh the structure 
+#
+base.mesh height=1 width=2
+#
+bound.cond max.slope=28 max.ratio=300 rnd.unit=0.001 line.straightening=1 align.points when=automatic
+#
+imp.refine imp="Net Doping" scale=log
+imp.refine min.spacing=0.1
+#
+constr.mesh max.angle=90 max.ratio=300 max.height=10000 \
+	max.width=10000 min.height=0.0001 min.width=0.0001
+#
+constr.mesh type=Semiconductor default
+#
+constr.mesh type=Insulator default
+#
+constr.mesh type=Metal default
+#
+constr.mesh type=Other default
+#
+#constr.mesh id=1 under.reg=gate depth=0.1 default max.height=0.0125 max.width=0.2
+
+constr.mesh id=1 x1=$"L_1"-1  y1=0   x2=$"L_1"+0.5  y2=1   default max.height=0.2  max.width=1
+constr.mesh id=2 x1=$"L_1"+$"S1"-0.5  y1=0   x2=$"L_1"+$"S1"+0.5  y2=1   default max.height=0.2  max.width=1
+constr.mesh id=3 x1=$"L_1"+$"S1"+$"W1"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+0.5  y2=1 default max.height=0.2  max.width=1
+constr.mesh id=4 x1=$"L_1"+$"S1"+$"W1"+$"S2"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=5 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=6 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=7 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+0.5 y2=1  default max.height=0.2 max.width=1
+constr.mesh id=8 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"W3"+$"S3"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"W3"+$"S3"+$"S4"+0.5  y2=1 default max.height=0.2  max.width=1
+constr.mesh id=9 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"W3"+$"S3"+$"W4"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S4"+0.5  y2=1 default max.height=0.2  max.width=1
+constr.mesh id=10 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=11 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=12 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=13 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=14 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=15 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=16 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S4"+$"S8"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=17 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=18 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+constr.mesh id=19 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+
+constr.mesh id=20 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+
+constr.mesh id=21 x1=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+$"S4"-0.5  y1=0 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+$"S4"+0.5 y2=1  default max.height=0.2  max.width=1
+
+constr.mesh id=22 x1=-$L_p+$"L_1" y1=$T_p-0.5 x2=$"L_1"+$"S1"+$"W1"+$"S2"+$"W2"+$"S3"+$"W3"+$"S4"+$"W4"+$"S5"+$"W5"+$"S6"+$"W6"+$"S7"+$"W7"+$"S8"+$"W8"+$"S9"+$"W9"+$"S10"+$"W10"+2 y2=$T_p+0.5 max.height=0.2 max.width=2
+Mesh Mode=MeshBuild
+
+struct outfile=VDMOS_remesh_re.str 
+
+go atlas
+#material
+init infile=VDMOS_remesh_re.str
+material material=4H-SiC permitti=9.66 eg300=1.12 affinity=3.7 \
+         edb=0.065   gcb=2 eab=0.191 gvb=4 nc300=1.8e19 nv300=2.1e19 \
+         arichn=146  arichp=110 ni.min=1e6 
+# FIRST DEFINE MOBILITY IN PLANE <1100>
+#
+MOBILITY MATERIAL=4H-SiC VSATN=2E7 VSATP=2E7 BETAN=2 BETAP=2 \
+MU1N.CAUG=10 MU2N.CAUG=410 NCRITN.CAUG=13E17 \
+DELTAN.CAUG=0.6 GAMMAN.CAUG=0.0 \
+ALPHAN.CAUG=-3 BETAN.CAUG=-3 \
+MU1P.CAUG=20 MU2P.CAUG=95 NCRITP.CAUG=1E19 \
+DELTAP.CAUG=0.5 GAMMAP.CAUG=0.0 \
+ALPHAP.CAUG=-3 BETAP.CAUG=-3
+#
+# NOW DEFINE MOBILITY IN PLANE <0001>
+#
+MOBILITY MATERIAL=4H-SiC N.ANGLE=90.0 P.ANGLE=90.0 VSATN=2E7 VSATP=2E7 \
+BETAN=2 BETAP=2 MU1N.CAUG=5 MU2N.CAUG=80 NCRITN.CAUG=13E17 \
+DELTAN.CAUG=0.6 GAMMAN.CAUG=0.0 \
+ALPHAN.CAUG=-3 BETAN.CAUG=-3 \
+MU1P.CAUG=2.5 MU2P.CAUG=20 NCRITP.CAUG=1E19 \
+DELTAP.CAUG=0.5 GAMMAP.CAUG=0.0 \
+ALPHAP.CAUG=-3 BETAP.CAUG=-3
+# Schottky contact:
+contact name=gate n.poly
+#models 
+#models  cvt srh auger fermi optr bgn print 
+#models  analytic conmob fldmob srh auger fermi optr bgn print
+models srh fermi  print
+#aniso
+impact aniso sic4h0001 e.side
+##default sic4h0001
+method climit=1e-5 maxtrap=4
+#interface density
+interface qf=$qf
+
+################################
+#test Bearkdown characteristics#
+################################
+#breakdown VOltage
+solve init
+solve prev
+log outf=VDMOS_BV_N10_S24W4k024.log 
+solve name=drain vdrain=0 vfinal=200 vstep=50
+solve name=drain vfinal=1800 vstep=200 
+solve name=drain vfinal=1900 vstep=10 
+solve name=drain vfinal=2000 vstep=50 compl=2e-8 cname=drain
+output flowlines e.mobility h.mobility
+save outf=VDMOS_VDMOS_BV_N10_S24W4k024.str
+tonyplot VDMOS_BV_N10_S24W4k024.log 
